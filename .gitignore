@@ -1,0 +1,22 @@
+# Unreal Engine
+Binaries/
+Intermediate/
+Saved/
+DerivedDataCache/
+Build/
+
+# Visual Studio
+.vs/
+*.sln
+*.sln.DotSettings.user
+
+# Content (optional - uncomment to exclude large assets)
+# Content/
+
+# OS generated files
+.DS_Store
+Thumbs.db
+*.swp
+
+# Upgrade logs
+UpgradeLog.htm
