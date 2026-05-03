@@ -29,7 +29,7 @@ ABoxCharacter::ABoxCharacter()
 	GetCharacterMovement()->bOrientRotationToMovement = true;
 	GetCharacterMovement()->RotationRate = FRotator(0.0f, 500.0f, 0.0f);
 
-	GetCharacterMovement()->JumpZVelocity = 700.f;
+	GetCharacterMovement()->JumpZVelocity = 350.f;
 	GetCharacterMovement()->AirControl = 0.35f;
 	GetCharacterMovement()->MaxWalkSpeed = 500.f;
 	GetCharacterMovement()->MinAnalogWalkSpeed = 20.f;
@@ -242,7 +242,7 @@ void ABoxCharacter::SnapToPushPosition(FVector Direction, AMyBox* Box)
 {
 	if (PushState == EPushState::None)
 	{
-		AddActorWorldOffset(-Direction * 45.0f);
+		AddActorWorldOffset(-Direction * SnapDistance);
 		FVector ToBox = Box->GetActorLocation() - GetActorLocation();
 		ToBox.Z = 0.0f;
 		SetActorRotation(ToBox.Rotation());

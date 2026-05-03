@@ -62,6 +62,9 @@ class ABoxCharacter : public ACharacter
 	UPROPERTY(Transient)
 	EPushState PushState;
 
+	UPROPERTY(EditAnywhere, Category = "Push")
+	float SnapDistance = 25.0f;
+
 public:
 	ABoxCharacter();
 
