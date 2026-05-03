@@ -8,6 +8,7 @@
 
 class UBoxComponent;
 class UPrimitiveComponent;
+class USoundBase;
 
 UCLASS()
 class BOX_API AKillZone : public AActor
@@ -22,6 +23,9 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = KillZone)
 	bool bEnabled = true;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Sound)
+	USoundBase* DeathSound;
 
 protected:
 	UFUNCTION()

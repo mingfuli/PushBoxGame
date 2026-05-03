@@ -4,6 +4,8 @@
 #include "Components/BoxComponent.h"
 #include "GameFramework/Character.h"
 #include "Kismet/GameplayStatics.h"
+#include "TimerManager.h"
+#include "Sound/SoundBase.h"
 
 AKillZone::AKillZone()
 {
@@ -32,10 +34,23 @@ void AKillZone::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* Othe
 	if (OtherActor->IsA(ACharacter::StaticClass()))
 	{
 		UWorld* World = GetWorld();
-		if (World)
+		if (!World)
+		{
+			return;
+		}
+
+		float Delay = 0.0f;
+		if (DeathSound)
+		{
+			UGameplayStatics::PlaySoundAtLocation(this, DeathSound, OtherActor->GetActorLocation());
+			Delay = DeathSound->GetDuration();
+		}
+
+		FTimerHandle TimerHandle;
+		World->GetTimerManager().SetTimer(TimerHandle, [World]()
 		{
 			FString CurrentLevelName = UGameplayStatics::GetCurrentLevelName(World);
 			UGameplayStatics::OpenLevel(World, FName(*CurrentLevelName));
-		}
+		}, Delay, false);
 	}
 }
