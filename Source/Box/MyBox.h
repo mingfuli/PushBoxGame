@@ -9,6 +9,7 @@
 class UBoxComponent;
 class UStaticMeshComponent;
 class ACharacter;
+class USoundBase;
 
 UENUM()
 enum class EBoxState : uint8
@@ -47,6 +48,9 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Animation)
 	class UAnimMontage* PushMontage;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Sound")
+	USoundBase* PushSound;
 
 	bool CanMoveTo(FVector Target) const;
 	void BeginMove(FVector Direction, ACharacter* Player);

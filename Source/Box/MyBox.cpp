@@ -6,6 +6,8 @@
 #include "Components/StaticMeshComponent.h"
 #include "GameFramework/Character.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "Kismet/GameplayStatics.h"
+#include "Sound/SoundBase.h"
 
 AMyBox::AMyBox()
 	: CurrentState(EBoxState::Idle)
@@ -76,6 +78,11 @@ void AMyBox::BeginMove(FVector Direction, ACharacter* Player)
 	TargetLocation = StartLocation + Direction * MoveDistance;
 	MoveElapsed = 0.0f;
 	CurrentState = EBoxState::Moving;
+
+	if (PushSound)
+	{
+		UGameplayStatics::PlaySoundAtLocation(this, PushSound, GetActorLocation());
+	}
 }
 
 void AMyBox::AttachPlayer(ACharacter* Player)
