@@ -118,7 +118,7 @@ void ABoxCharacter::Tick(float DeltaTime)
 		break;
 	}
 
-	GEngine->AddOnScreenDebugMessage(INDEX_NONE, 0.0f, FColor::Cyan, FString::Printf(TEXT("PushState: %s"), StateText));
+	//GEngine->AddOnScreenDebugMessage(INDEX_NONE, 0.0f, FColor::Cyan, FString::Printf(TEXT("PushState: %s"), StateText));
 }
 
 void ABoxCharacter::OnBoxMoveFinishedHandler()
