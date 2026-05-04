@@ -2,6 +2,7 @@
 
 #include "BoxCharacter.h"
 #include "MyBox.h"
+#include "Components/BoxComponent.h"
 #include "Engine/LocalPlayer.h"
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
@@ -242,10 +243,26 @@ void ABoxCharacter::SnapToPushPosition(FVector Direction, AMyBox* Box)
 {
 	if (PushState == EPushState::None)
 	{
-		AddActorWorldOffset(-Direction * SnapDistance);
-		FVector ToBox = Box->GetActorLocation() - GetActorLocation();
-		ToBox.Z = 0.0f;
-		SetActorRotation(ToBox.Rotation());
+		FVector BoxExtent = Box->CollisionBox->GetScaledBoxExtent() / 2;
+		FVector BoxCenter = Box->GetActorLocation();
+
+		FVector CurrentLoc = GetActorLocation();
+		FVector SideDelta = FVector::ZeroVector;
+
+		if (FMath::Abs(Direction.X) > 0.5f)
+		{
+			float ClampedY = FMath::Clamp(CurrentLoc.Y, BoxCenter.Y - BoxExtent.Y, BoxCenter.Y + BoxExtent.Y);
+			SideDelta.Y = ClampedY - CurrentLoc.Y;
+		}
+		else
+		{
+			float ClampedX = FMath::Clamp(CurrentLoc.X, BoxCenter.X - BoxExtent.X, BoxCenter.X + BoxExtent.X);
+			SideDelta.X = ClampedX - CurrentLoc.X;
+		}
+
+		FVector TotalOffset = -Direction * SnapDistance + SideDelta;
+		AddActorWorldOffset(TotalOffset);
+		SetActorRotation(Direction.Rotation());
 	}
 }
 
